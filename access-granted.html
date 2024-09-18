@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accès Accordé</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1c1f2b;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #00ff88;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .blockchain-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .blockchain-icons img {
+            width: 60px;
+            height: 60px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .blockchain-icons img:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Accès Accordé</h1>
+    <p>Bienvenue sur votre espace sécurisé. Vous pouvez désormais explorer les contenus exclusifs liés à la blockchain.</p>
+
+    <div class="blockchain-icons">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Ethereum-icon-purple.svg/1024px-Ethereum-icon-purple.svg.png" alt="Ethereum">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1024px-Bitcoin.svg.png" alt="Bitcoin">
+        <img src="https://cryptologos.cc/logos/polkadot-new-dot-logo.png?v=025" alt="Polkadot">
+    </div>
+</body>
+</html>
