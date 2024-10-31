@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion avec WalletConnect</title>
+  <script src="https://cdn.jsdelivr.net/npm/@walletconnect/client@2.0.0-beta.6/dist/browser.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <style>
+    #userAddress {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    #qrCodeContainer {
+      margin-top: 20px;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Connectez votre portefeuille</h2>
+  <button id="connectButton">Connecter le portefeuille</button>
+  <div id="userAddress">Adresse : non connectée</div>
+  <div id="qrCodeContainer"></div>
+
+  <script type="module">
+    import WalletConnectClient from "@walletconnect/client";
+    import QRCodeModal from "@walletconnect/qrcode-modal";
+
+    async function connectWallet() {
+      const connector = await WalletConnectClient.init({
+        projectId: "c0af607d4b12a5ab3f9a2498498593c7", // Remplace par ton projectId WalletConnect Cloud
+        relayUrl: "wss://relay.walletconnect.com", // Utilise le relais par défaut
+        metadata: {
+          name: "Mon Application", // Nom de ton application
+          description: "Connexion WalletConnect à mon application", // Description de l'application
+          url: "https://receptive-song.surge.sh", // URL de ton site
+          icons: ["https://mondomaine.com/logo.png"], // URL de l'icône
+        },
+      });
+
+      // Vérifier s'il existe déjà une session
+      if (!connector.session) {
+        const { uri } = await connector.connect({
+          permissions: {
+            blockchain: { chains: ["eip155:1"] }, // Remplace par la chaîne que tu veux utiliser (Ethereum mainnet ici)
+            jsonrpc: { methods: ["eth_sendTransaction", "personal_sign", "eth_signTypedData"] },
+          },
+        });
+
+        // Affiche le QR code pour que l'utilisateur puisse se connecter
+        QRCodeModal.open(uri, () => {
+          console.log("QR Code Modal fermé");
+        });
+      }
+
+      // Gérer l'événement de connexion pour afficher l'adresse de l'utilisateur
+      connector.on("session_update", (payload) => {
+        const { accounts } = payload.params[0];
+        const userAddress = accounts[0];
+        document.getElementById("userAddress").innerText = `Adresse : ${userAddress}`;
+        QRCodeModal.close();
+      });
+
+      // Gérer la déconnexion et réinitialiser l'affichage
+      connector.on("disconnect", () => {
+        document.getElementById("userAddress").innerText = "Adresse : non connectée";
+        document.getElementById("qrCodeContainer").innerHTML = "";
+        console.log("Déconnecté");
+      });
+    }
+
+    document.getElementById("connectButton").onclick = connectWallet;
+  </script>
+</body>
+</html>

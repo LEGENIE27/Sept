@@ -1,3 +1,4 @@
+
 async function verifyNFT() {
     if (typeof window.ethereum !== 'undefined') {
         await ethereum.request({ method: 'eth_requestAccounts' });

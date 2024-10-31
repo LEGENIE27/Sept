@@ -23,6 +23,7 @@
         }
 
         #connect-wallet {
+            display: inline-block; /* Pour que le lien se comporte comme un bouton */
             padding: 12px 24px;
             font-size: 18px;
             cursor: pointer;
@@ -30,6 +31,7 @@
             color: #fff;
             border: none;
             border-radius: 5px;
+            text-decoration: none; /* Enlever le soulignement */
             transition: background-color 0.3s ease;
         }
 
@@ -85,7 +87,7 @@
 </head>
 <body>
 
-    <button id="connect-wallet">Connecter wallet</button>
+    <a id="connect-wallet" href="walletconnect.html">Connecter wallet</a>
 
     <div id="loading">Vérification de votre NFT en cours...</div>
     
